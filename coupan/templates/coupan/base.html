@@ -38,15 +38,15 @@
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             {% if user.is_authenticated %}
-            {% if user.profile.user_category == 'Company' %}
-            <a class="nav-item nav-link" href="{% url 'coupan-create' %}">New Coupan</a>
-            {% endif %}
-            <a class="nav-item nav-link" href="{% url 'profile' %}">{{user.username}}</a>
+              {% if user.profile.user_category == 'Company' %}
+                <a class="nav-item nav-link" href="{% url 'coupan-create' %}">New Coupan</a>
+              {% endif %}
+              <a class="nav-item nav-link" href="{% url 'profile' %}">{{user.username}}</a>
 
-            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}
-            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
             {% endif %}
           </div>
         </div>
@@ -76,7 +76,7 @@ function copyCode() {
   copyText.select();
   
   /* Copy the text inside the text field */
-  
+
   document.execCommand("copy");
 
   /* Alert the copied text */

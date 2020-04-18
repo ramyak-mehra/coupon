@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #SECRET_KEY = '&1-pnp)o=qtj*2o3skz(p7y#_l61zn+rp$20_(-#sq(i-n_1nc'
 SECRET_KEY= os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == "Ture")
 
 ALLOWED_HOSTS = ['mycouponapp.herokuapp.com']
 
