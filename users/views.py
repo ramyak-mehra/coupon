@@ -37,8 +37,8 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileForm(instance=request.user.profile)
-        user = request.user.profile.user_category
-        if user == 'Company':
+        company_user = request.user.profile.user_category
+        if company_user == 'Company':
             coupans = Coupan.objects.filter(owner=request.user).order_by('-publish_date')
             paginator = Paginator(coupans , 2)
             page = request.GET.get('page')
@@ -47,7 +47,7 @@ def profile(request):
                 'u_form': u_form,
                 'p_form': p_form,
                 'coupans' : coupans,
-                'user' : user
+                'company_user' : company_user
             }
             return render(request, 'users/profile.html', context)
         else:

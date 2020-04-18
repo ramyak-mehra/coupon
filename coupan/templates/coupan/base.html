@@ -42,7 +42,6 @@
                 <a class="nav-item nav-link" href="{% url 'coupan-create' %}">New Coupan</a>
               {% endif %}
               <a class="nav-item nav-link" href="{% url 'profile' %}">{{user.username}}</a>
-
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}
               <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
@@ -71,16 +70,19 @@
 <script>
 function copyCode() {
   /* Get the coupon-code field */
-  var copyText = document.getElementById("coupan-code");
-
-  copyText.select();
-  
-  /* Copy the text inside the text field */
-
-  document.execCommand("copy");
-
-  /* Alert the copied text */
-  alert("Copied: " + copyText.value);
+  document.querySelector('p').addEventListener('click', async event => {
+  if (!navigator.clipboard) {
+    // Clipboard API not available
+    return
+  }
+  const text = event.target.innerText
+  try {
+    await navigator.clipboard.writeText(text)
+    event.target.textContent = 'Copied to clipboard'
+  } catch (err) {
+    console.error('Failed to copy!', err)
+  }
+})
 }
 </script>
   <!-- Optional JavaScript -->
@@ -94,6 +96,7 @@ function copyCode() {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 </body>
 
 </html>

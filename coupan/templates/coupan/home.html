@@ -16,9 +16,8 @@
         </div>
         <h2><a class="article-title" id="coupan-share" href="{% url 'coupan-detail' coupan.id%}">{{ coupan.title }}</a></h2>
         <p class="article-content">{{ coupan.description }}</p>
-        <p class="article-content"  >Coupon code : {{ coupan.code }}</p>
-        <button class="btn btn-outline-info" onclick="copyCode()"  id="coupan-code" value=" {{ coupan.code  }} ">Copy Coupon Code</button>
-        <button class="btn btn-outline-info ml-3" type="submit">Share Coupon</button>
+        <p class="article-content" id="coupan-code" value=" {{ coupan.code  }}"  >Coupon code : {{ coupan.code }}</p>
+        
     </div>
 </article>
 
