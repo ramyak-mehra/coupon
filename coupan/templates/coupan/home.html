@@ -1,0 +1,47 @@
+{% extends 'coupan/base.html' %}
+{% block content %}
+
+<div class="md-form active-cyan-2 mb-3">
+    <form method="GET">
+        <input type="text" ,class='form-control' ,value="{{request.GET.search}}" , name="search" , placeholder="Search for Coupons">
+       </form>
+</div>
+{% for coupan in coupans %}
+
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" ,  href="{% url 'user-coupan' coupan.owner.username %}">{{ coupan.owner }}</a>
+            <small class="text-muted">{{ coupan.publish_date|date:"N d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" id="coupan-share" href="{% url 'coupan-detail' coupan.id%}">{{ coupan.title }}</a></h2>
+        <p class="article-content">{{ coupan.description }}</p>
+        <p class="article-content"  >Coupon code : {{ coupan.code }}</p>
+        <button class="btn btn-outline-info" onclick="copyCode()"  id="coupan-code" value=" {{ coupan.code  }} ">Copy Coupon Code</button>
+        <button class="btn btn-outline-info ml-3" type="submit">Share Coupon</button>
+    </div>
+</article>
+
+{% endfor %}
+{% if is_paginated %}
+
+{% if page_obj.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+<a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+{% endif %}
+
+{% endif %}
+{% endblock content %}

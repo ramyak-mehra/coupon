@@ -1,0 +1,74 @@
+{% extends "coupan/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+  <div class="media">
+    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+    <div class="media-body">
+      <h2 class="account-heading">{{ user.username }}</h2>
+      <p class="text-secondary">{{ user.email }}</p>
+      <p class="text-secondary">{{ user.profile.user_category }}</p>
+    </div>
+  </div>
+  <!-- FORM HERE -->
+  <form method="POST" , enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Profile Info</legend>
+      {{ p_form|crispy }}
+      {{ u_form|crispy }}
+
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-info" type="submit">Update</button>
+    </div>
+  </form>
+
+</div>
+
+{% endblock content %}
+
+{% block side%}
+<div class="col-md-4">
+  <div class="content-section">
+    <h3>Your Coupans</h3>
+
+    <ul class="list-group">
+      {% for coupan in coupans %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="{% url 'user-coupan' coupan.owner.username %}">{{ coupan.owner }}</a>
+            <small class="text-muted">{{ coupan.publish_date|date:"N d, Y" }}</small>
+          </div>
+          <h2><a class="article-title" href="{% url 'coupan-detail' coupan.id%}">{{ coupan.title }}</a></h2>
+          <p class="article-content">{{ coupan.description }}</p>
+          <p class="article-content">{{ coupan.code }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </ul>
+    </p>
+  </div>
+
+
+  {% if coupans.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ coupans.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in coupans.paginator.page_range %}
+        {% if coupans.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > coupans.number|add:'-3' and num < coupans.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if coupans.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ coupans.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ coupans.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+  {% endblock side%}
