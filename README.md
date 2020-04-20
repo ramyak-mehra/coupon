@@ -8,6 +8,6 @@ In this website company can create coupans and users can easily search for them.
 * View a comapnies all coupons at one place
 
 ## Features To be implemented In Future-
-* Share the coupan (Currently Broken)
+* ~~Share the coupan (Currently Broken)~~ Fixed
 * Add coupans to favoruites
 * Add AWS to store images
