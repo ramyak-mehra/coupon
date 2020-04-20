@@ -45,6 +45,8 @@
           <h2><a class="article-title" href="{% url 'coupan-detail' coupan.id%}">{{ coupan.title }}</a></h2>
           <p class="article-content">{{ coupan.description }}</p>
           <p class="article-content">{{ coupan.code }}</p>
+          <button class="btn btn-outline-info" type="submit" onclick="CopyUrl(this)" id="{{coupan.get_absolute_url }}">Share Link</button>
+        
         </div>
       </article>
       {% endfor %}

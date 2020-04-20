@@ -38,14 +38,14 @@
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             {% if user.is_authenticated %}
-              {% if user.profile.user_category == 'Company' %}
-                <a class="nav-item nav-link" href="{% url 'coupan-create' %}">New Coupan</a>
-              {% endif %}
-              <a class="nav-item nav-link" href="{% url 'profile' %}">{{user.username}}</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            {% if user.profile.user_category == 'Company' %}
+            <a class="nav-item nav-link" href="{% url 'coupan-create' %}">New Coupan</a>
+            {% endif %}
+            <a class="nav-item nav-link" href="{% url 'profile' %}">{{user.username}}</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
             {% endif %}
           </div>
         </div>
@@ -67,24 +67,32 @@
       {% block side %}{% endblock %}
     </div>
   </main>
-<script>
-function copyCode() {
-  /* Get the coupon-code field */
-  document.querySelector('p').addEventListener('click', async event => {
-  if (!navigator.clipboard) {
-    // Clipboard API not available
-    return
-  }
-  const text = event.target.innerText
-  try {
-    await navigator.clipboard.writeText(text)
-    event.target.textContent = 'Copied to clipboard'
-  } catch (err) {
-    console.error('Failed to copy!', err)
-  }
-})
-}
-</script>
+  <script>
+    function CopyUrl(element) {
+    
+      var text = location.host + element.id;
+      if (window.clipboardData && window.clipboardData.setData) {
+        return clipboardData.setData("Text", text);
+      }
+      else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var textarea = document.createElement("textarea");
+        textarea.textContent = text;
+        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+        }
+        catch (ex) {
+          console.warn("Copy to clipboard failed.", ex);
+          return false;
+        }
+        finally {
+          document.body.removeChild(textarea);
+        }
+      }
+    }
+  </script>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -96,7 +104,7 @@ function copyCode() {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 </body>
 
 </html>
